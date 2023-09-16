@@ -1,0 +1,173 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Calendário JavaScript</title>
+    <style>
+        
+        body 
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial;
+        }
+
+        .calendarioTit
+        {
+            grid-column: span 7;
+            font-weight: bold;
+            font-size: 24;
+
+        }
+
+        .calendario 
+        {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+        }
+
+        .dia 
+        {
+            border: 1px solid;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .vazio
+        {
+
+            padding: 10px;
+        }
+
+        .domingo 
+        {
+            border: 1px solid;
+            border-radius: 5px;
+            border-color: black;
+            background-color: red;
+            padding: 10px;
+            color: white;
+        }
+
+        #semana
+        {
+            font-weight: bold;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="calendario">
+        <div class="calendarioTit" id="alvo"></div>
+        <div class="dia" id="semana">DOM</div>
+        <div class="dia" id="semana">SEG</div>
+        <div class="dia" id="semana">TER</div>
+        <div class="dia" id="semana">QUA</div>
+        <div class="dia" id="semana">QUI</div>
+        <div class="dia" id="semana">SEX</div>
+        <div class="dia" id="semana">SÁB</div>
+
+        <script lang="JavaScript">
+
+            function criarCalendario()
+            {
+                var ano, mes, dia, contadorDias, vazio;
+                    vazio = 0;
+                    diaDaSemana = new Array(7);
+                    mesCalendario = new Array(12);
+
+                    diaDaSemana[0] = "Dom";
+                    diaDaSemana[1] = "Seg";
+                    diaDaSemana[2] = "Ter";
+                    diaDaSemana[3] = "Qua";
+                    diaDaSemana[4] = "Qui";
+                    diaDaSemana[5] = "Sex";
+                    diaDaSemana[6] = "Sáb";
+
+                    mesCalendario[0] = "Janeiro";
+                    mesCalendario[1] = "Fevereiro";
+                    mesCalendario[2] = "Março";
+                    mesCalendario[3] = "Abril";
+                    mesCalendario[4] = "Maio";
+                    mesCalendario[5] = "Junho";
+                    mesCalendario[6] = "Julho";
+                    mesCalendario[7] = "Agosto";
+                    mesCalendario[8] = "Setembro";
+                    mesCalendario[9] = "Outubro";
+                    mesCalendario[10] = "Novembro";
+                    mesCalendario[11] = "Dezembro";
+
+
+                    do
+                    {
+                        ano = parseInt(window.prompt("Informe o ano.","2023"));
+                    }
+                    while(ano<1);
+
+                    do
+                    {
+                        mes = parseInt(window.prompt("Informe o mês.","9"));
+                    }
+                    while(mes<1 || mes>12);
+
+                    do
+                    {
+                        dia = parseInt(window.prompt("Informe o dia.","11"));
+                    }
+                    while(dia<1 || dia>31);
+                    
+                    data = new Date(ano, mes-1, dia-(dia-1));
+                    fimData = new Date(ano, mes, dia);
+                    fimData.setDate(0);
+                    contadorDias = fimData.getDate();
+                    inicioSemana = data.getDay();
+                    
+                    document.getElementById("alvo").innerHTML = mesCalendario[mes-1] + " " + ano;
+
+                    var calendario = document.querySelector('.calendario');
+
+                    if(inicioSemana > 0)
+                        {
+                            do
+                            {
+
+                                var dia = document.createElement('div');
+                                vazio.className = 'vazio';
+                                calendario.appendChild(dia);
+                                ++vazio;
+                            }
+                            while(vazio<inicioSemana);
+                        }
+
+                    for (var i = 1; i <= contadorDias; i++) 
+                    {
+                        if(inicioSemana == 0)
+                        {
+                            var dia = document.createElement('div');
+                            dia.className = 'domingo';
+                            dia.textContent = i;
+                            calendario.appendChild(dia);
+                            ++inicioSemana;
+                        }
+                        else
+                        {
+                            var dia = document.createElement('div');
+                            dia.className = 'dia';
+                            dia.textContent = i;
+                            calendario.appendChild(dia);
+                            ++inicioSemana;
+                            if (inicioSemana>6)
+                            {
+                                inicioSemana=0;
+                            }
+                        }
+                    }
+            }
+        </script>
+        
+        <script>
+            criarCalendario();
+        </script>
+</body>
+</html>
